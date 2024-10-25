@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Empleados</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href=""> <!-- Agrega tu CSS aquí -->
+</head>
+<body>
+    <div class="container my-5">
+        <h1 class="text-center">Gestión de Empleados</h1>
+
+        <div id="employeeForm" class="mb-4">
+            <h2>Formulario de Empleado</h2>
+            <form id="crudForm">
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="employeeId">ID</label>
+                        <input type="text" class="form-control" id="employeeId" name="employeeId" required>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="firstName">Primer Nombre</label>
+                        <input type="text" class="form-control" id="firstName" name="firstName" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="secondName">Segundo Nombre</label>
+                        <input type="text" class="form-control" id="secondName" name="secondName" required>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="salary">Salario</label>
+                        <input type="text" class="form-control" id="salary" name="salary" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="commission">Comisión</label>
+                        <input type="text" class="form-control" id="commission" name="commission" required>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="lastName">Apellido</label>
+                        <input type="text" class="form-control" id="lastName" name="lastName" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="email">Correo Electrónico</label>
+                        <input type="email" class="form-control" id="email" name="email" required>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="phone">Teléfono</label>
+                        <input type="text" class="form-control" id="phone" name="phone" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="hireDate">Fecha de Contratación</label>
+                        <input type="date" class="form-control" id="hireDate" name="hireDate" required>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="manager">Manager</label>
+                        <select class="form-control" id="manager" name="manager" required>
+                            <option value="" disabled selected>Selecciona un Manager</option>
+                            <option value="manager1">Manager 1</option>
+                            <option value="manager2">Manager 2</option>
+                            <option value="manager3">Manager 3</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="department">Departamento</label>
+                        <select class="form-control" id="department" name="department" required>
+                            <option value="" disabled selected>Selecciona un Departamento</option>
+                            <option value="hr">Recursos Humanos</option>
+                            <option value="it">Tecnologías de la Información</option>
+                            <option value="sales">Ventas</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="jobTitle">Trabajo</label>
+                        <select class="form-control" id="jobTitle" name="jobTitle" required>
+                            <option value="" disabled selected>Selecciona un Trabajo</option>
+                            <option value="developer">Desarrollador</option>
+                            <option value="analyst">Analista</option>
+                            <option value="manager">Gerente</option>
+                        </select>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Guardar</button>
+                <button type="button" class="btn btn-warning" id="updateBtn">Actualizar</button>
+                <button type="button" class="btn btn-danger" id="deleteBtn">Eliminar</button>
+            </form>
+        </div>
+
+        <h2>Lista de Empleados</h2>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Apellido</th>
+                    <th>Correo Electrónico</th>
+                    <th>Teléfono</th>
+                    <th>Fecha de Contratación</th>
+                    <th>Título del Trabajo</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody id="employeeTableBody">
+                <!-- Aquí se llenarán los empleados mediante JavaScript -->
+            </tbody>
+        </table>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="app.js"></script> <!-- Agrega tu lógica JS aquí -->
+</body>
+</html>

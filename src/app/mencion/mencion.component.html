@@ -1,0 +1,14 @@
+<div class="container my-5">
+    <h1 class="text-center">Gestión de Empleados</h1>
+
+    <form>
+        <div class="form-group">
+            <label for="mention" class="h5">Mención</label>
+            <select class="form-control form-control-lg" id="mention" [(ngModel)]="selectedMention" (change)="onMentionChange()" name="mention" required>
+                <option value="" disabled selected>Selecciona una Mención</option>
+                <option *ngFor="let mention of mentions" [value]="mention.value" [attr.data-description]="mention.description">{{ mention.label }}</option>
+            </select>
+            <small id="mentionDescription" class="form-text text-muted h6">{{ mentionDescription }}</small>
+        </div>
+    </form>
+</div>
