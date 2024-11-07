@@ -5,63 +5,63 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Empleados</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href=""> <!-- Agrega tu CSS aquí -->
+    <link rel="stylesheet" href="./empleado.component.css"> <!-- Enlace correcto al archivo CSS -->
 </head>
 <body>
     <div class="container my-5">
         <h1 class="text-center">Gestión de Empleados</h1>
-
+    
         <div id="employeeForm" class="mb-4">
             <h2>Formulario de Empleado</h2>
-            <form id="crudForm">
+            <form (ngSubmit)="onSubmit()" #crudForm="ngForm">
                 <div class="form-row">
                     <div class="form-group col-md-6">
                         <label for="employeeId">ID</label>
-                        <input type="text" class="form-control" id="employeeId" name="employeeId" required>
+                        <input type="text" class="form-control" id="employeeId" name="employeeId" [(ngModel)]="empleado.employee_id" required>
                     </div>
                     <div class="form-group col-md-6">
                         <label for="firstName">Primer Nombre</label>
-                        <input type="text" class="form-control" id="firstName" name="firstName" required>
+                        <input type="text" class="form-control" id="firstName" name="firstName" [(ngModel)]="empleado.first_name" required>
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="form-group col-md-6">
                         <label for="secondName">Segundo Nombre</label>
-                        <input type="text" class="form-control" id="secondName" name="secondName" required>
+                        <input type="text" class="form-control" id="secondName" name="secondName" [(ngModel)]="empleado.second_name">
                     </div>
                     <div class="form-group col-md-6">
                         <label for="salary">Salario</label>
-                        <input type="text" class="form-control" id="salary" name="salary" required>
+                        <input type="text" class="form-control" id="salary" name="salary" [(ngModel)]="empleado.salary" required>
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="form-group col-md-6">
                         <label for="commission">Comisión</label>
-                        <input type="text" class="form-control" id="commission" name="commission" required>
+                        <input type="text" class="form-control" id="commission" name="commission" [(ngModel)]="empleado.commission_pct">
                     </div>
                     <div class="form-group col-md-6">
                         <label for="lastName">Apellido</label>
-                        <input type="text" class="form-control" id="lastName" name="lastName" required>
+                        <input type="text" class="form-control" id="lastName" name="lastName" [(ngModel)]="empleado.last_name" required>
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="form-group col-md-6">
                         <label for="email">Correo Electrónico</label>
-                        <input type="email" class="form-control" id="email" name="email" required>
+                        <input type="email" class="form-control" id="email" name="email" [(ngModel)]="empleado.email" required>
                     </div>
                     <div class="form-group col-md-6">
                         <label for="phone">Teléfono</label>
-                        <input type="text" class="form-control" id="phone" name="phone" required>
+                        <input type="text" class="form-control" id="phone" name="phone" [(ngModel)]="empleado.phone_number" required>
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="form-group col-md-6">
                         <label for="hireDate">Fecha de Contratación</label>
-                        <input type="date" class="form-control" id="hireDate" name="hireDate" required>
+                        <input type="date" class="form-control" id="hireDate" name="hireDate" [(ngModel)]="empleado.hire_date" required>
                     </div>
                     <div class="form-group col-md-6">
                         <label for="manager">Manager</label>
-                        <select class="form-control" id="manager" name="manager" required>
+                        <select class="form-control" id="manager" name="manager" [(ngModel)]="empleado.manager_id" required>
                             <option value="" disabled selected>Selecciona un Manager</option>
                             <option value="manager1">Manager 1</option>
                             <option value="manager2">Manager 2</option>
@@ -72,7 +72,7 @@
                 <div class="form-row">
                     <div class="form-group col-md-6">
                         <label for="department">Departamento</label>
-                        <select class="form-control" id="department" name="department" required>
+                        <select class="form-control" id="department" name="department" [(ngModel)]="empleado.department_id" required>
                             <option value="" disabled selected>Selecciona un Departamento</option>
                             <option value="hr">Recursos Humanos</option>
                             <option value="it">Tecnologías de la Información</option>
@@ -81,7 +81,7 @@
                     </div>
                     <div class="form-group col-md-6">
                         <label for="jobTitle">Trabajo</label>
-                        <select class="form-control" id="jobTitle" name="jobTitle" required>
+                        <select class="form-control" id="jobTitle" name="jobTitle" [(ngModel)]="empleado.job_id" required>
                             <option value="" disabled selected>Selecciona un Trabajo</option>
                             <option value="developer">Desarrollador</option>
                             <option value="analyst">Analista</option>
@@ -90,34 +90,48 @@
                     </div>
                 </div>
                 <button type="submit" class="btn btn-primary">Guardar</button>
-                <button type="button" class="btn btn-warning" id="updateBtn">Actualizar</button>
-                <button type="button" class="btn btn-danger" id="deleteBtn">Eliminar</button>
+                <button type="button" class="btn btn-warning" (click)="onUpdate()">Actualizar</button>
+                <button type="button" class="btn btn-danger" (click)="onDelete()">Eliminar</button>
+                
             </form>
         </div>
-
-        <h2>Lista de Empleados</h2>
-        <table class="table table-bordered">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Nombre</th>
-                    <th>Apellido</th>
-                    <th>Correo Electrónico</th>
-                    <th>Teléfono</th>
-                    <th>Fecha de Contratación</th>
-                    <th>Título del Trabajo</th>
-                    <th>Acciones</th>
-                </tr>
-            </thead>
-            <tbody id="employeeTableBody">
-                <!-- Aquí se llenarán los empleados mediante JavaScript -->
-            </tbody>
-        </table>
+    
+        <div class="container my-5">
+            <h1>Lista de Empleados</h1>
+          
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Apellido</th>
+                        <th>Correo Electrónico</th>
+                        <th>Teléfono</th>
+                        <th>Fecha de Contratación</th>
+                        <th>Título del Trabajo</th>
+                        <th>Salario</th>
+                        <th>Comision</th>
+                        <th>Manager</th>
+                        <th>Departamento</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let empleado of empleados">
+                        <td>{{ empleado.employee_id }}</td>
+                        <td>{{ empleado.first_name }}</td>
+                        <td>{{ empleado.last_name }}</td>
+                        <td>{{ empleado.email }}</td>
+                        <td>{{ empleado.phone_number }}</td>
+                        <td>{{ empleado.hire_date | date }}</td>
+                        <td>{{ empleado.job_id }}</td>
+                        <td>{{ empleado.salary }}</td>
+                        <td>{{ empleado.commission_pct }}</td>
+                        <td>{{ empleado.manager_id }}</td>
+                        <td>{{ empleado.department_id }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
-
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script src="app.js"></script> <!-- Agrega tu lógica JS aquí -->
 </body>
 </html>
