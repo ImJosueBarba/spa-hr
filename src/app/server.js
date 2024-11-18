@@ -2,10 +2,11 @@ const express = require('express');
 const { Pool } = require('pg');
 const cors = require('cors');
 const bodyParser = require('body-parser');
-
+const jwt = require('jsonwebtoken');
+const authenticateToken = require('./middleware/auth');
+require ('dotenv').config();
 const app = express();
 const port = 3000;
-
 app.use(cors());
 app.use(bodyParser.json());
 
@@ -20,13 +21,13 @@ const pool = new Pool({
 // Rutas CRUD para EMPLOYEES
 
 // Obtener todos los empleados
-app.get('/api/employees', async (req, res) => {
+app.get('/api/employees', authenticateToken, async (req, res) => {
   try {
     const result = await pool.query('SELECT * FROM employees');
     res.json(result.rows);
   } catch (err) {
     console.error(err);
-    res.status(500).send('Error al obtener los empleados');
+    res.status(500).json({ message: 'Error al obtener los empleados' });
   }
 });
 
@@ -103,4 +104,43 @@ app.delete('/api/employees/:employee_id', async (req, res) => {
 // Iniciar el servidor
 app.listen(port, () => {
   console.log(`Servidor corriendo en http://localhost:${port}`);
+});
+
+app.get('/api/jobs', async (req, res) => {
+  try {
+    const result = await pool.query('SELECT job_id, job_title FROM jobs');
+    res.json(result.rows);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Error al obtener trabajos');
+  }
+});
+
+// Obtener managers
+app.get('/api/managers', async (req, res) => {
+  try {
+    const result = await pool.query('SELECT employee_id, first_name, last_name FROM employees');
+    res.json(result.rows);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Error al obtener managers');
+  }
+});
+
+// Obtener departamentos
+app.get('/api/departments', async (req, res) => {
+  try {
+    const result = await pool.query('SELECT department_id, department_name FROM departments');
+    res.json(result.rows);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Error al obtener departamentos');
+  }
+});
+
+app.post('/login', (req, res) => {
+  // Simulación de usuario
+  const user = { id: 1, username: 'admin' };
+  const token = jwt.sign(user, process.env.JWT_SECRET, { expiresIn: '1h' });
+  res.json({ token });
 });

@@ -1,6 +1,6 @@
 // empleado.service.ts
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -11,23 +11,46 @@ export class EmpleadoService {
 
   constructor(private http: HttpClient) {}
 
-  // Método para obtener todos los empleados
-  getEmpleados(): Observable<any[]> {
-    return this.http.get<any[]>(this.apiUrl);
+  private getAuthHeaders() {
+    const token = localStorage.getItem('token'); 
+    if (token) {
+      return new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    }
+    return new HttpHeaders(); 
   }
 
-  // Método para agregar un nuevo empleado
+  getEmpleados(): Observable<any> {
+    const headers = this.getAuthHeaders(); 
+    return this.http.get(this.apiUrl, { headers }); 
+  }
+
+  getJobs(): Observable<any> {
+    const headers = this.getAuthHeaders();
+    return this.http.get('http://localhost:3000/api/jobs', { headers });
+  }
+
+  getManagers(): Observable<any> {
+    const headers = this.getAuthHeaders();
+    return this.http.get('http://localhost:3000/api/managers', { headers });
+  }
+
+  getDepartments(): Observable<any> {
+    const headers = this.getAuthHeaders();
+    return this.http.get('http://localhost:3000/api/departments', { headers });
+  }
+
   addEmpleado(empleado: any): Observable<any> {
-    return this.http.post<any>(this.apiUrl, empleado);
+    const headers = this.getAuthHeaders();
+    return this.http.post(this.apiUrl, empleado, { headers });
   }
 
-  // Método para actualizar un empleado
   updateEmpleado(empleado: any): Observable<any> {
-    return this.http.put<any>(`${this.apiUrl}/${empleado.employee_id}`, empleado);
+    const headers = this.getAuthHeaders();
+    return this.http.put(`${this.apiUrl}/${empleado.employee_id}`, empleado, { headers });
   }
 
-  // Método para eliminar un empleado
   deleteEmpleado(employeeId: string): Observable<any> {
-    return this.http.delete<any>(`${this.apiUrl}/${employeeId}`);
+    const headers = this.getAuthHeaders();
+    return this.http.delete(`${this.apiUrl}/${employeeId}`, { headers });
   }
 }

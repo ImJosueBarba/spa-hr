@@ -3,17 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Empleados</title>
+    <title>Gestión de Empleados</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="./empleado.component.css"> <!-- Enlace correcto al archivo CSS -->
+    <link rel="stylesheet" href="./empleado.component.css"> <!-- Enlace al archivo CSS -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> <!-- Enlace a SweetAlert -->
 </head>
 <body>
     <div class="container my-5">
         <h1 class="text-center">Gestión de Empleados</h1>
-    
+
         <div id="employeeForm" class="mb-4">
             <h2>Formulario de Empleado</h2>
-            <form (ngSubmit)="onSubmit()" #crudForm="ngForm">
+            <form (ngSubmit)="onSubmit()" #crudForm="ngForm" class="border p-4 rounded bg-light">
                 <div class="form-row">
                     <div class="form-group col-md-6">
                         <label for="employeeId">ID</label>
@@ -63,9 +64,9 @@
                         <label for="manager">Manager</label>
                         <select class="form-control" id="manager" name="manager" [(ngModel)]="empleado.manager_id" required>
                             <option value="" disabled selected>Selecciona un Manager</option>
-                            <option value="manager1">Manager 1</option>
-                            <option value="manager2">Manager 2</option>
-                            <option value="manager3">Manager 3</option>
+                            <option *ngFor="let manager of managers" [value]="manager.employee_id">
+                                {{ manager.first_name }} {{ manager.last_name }}
+                            </option>
                         </select>
                     </div>
                 </div>
@@ -74,33 +75,31 @@
                         <label for="department">Departamento</label>
                         <select class="form-control" id="department" name="department" [(ngModel)]="empleado.department_id" required>
                             <option value="" disabled selected>Selecciona un Departamento</option>
-                            <option value="hr">Recursos Humanos</option>
-                            <option value="it">Tecnologías de la Información</option>
-                            <option value="sales">Ventas</option>
+                            <option *ngFor="let departamento of departamentos" [value]="departamento.department_id">
+                                {{ departamento.department_name }}
+                            </option>
                         </select>
                     </div>
                     <div class="form-group col-md-6">
                         <label for="jobTitle">Trabajo</label>
                         <select class="form-control" id="jobTitle" name="jobTitle" [(ngModel)]="empleado.job_id" required>
                             <option value="" disabled selected>Selecciona un Trabajo</option>
-                            <option value="developer">Desarrollador</option>
-                            <option value="analyst">Analista</option>
-                            <option value="manager">Gerente</option>
+                            <option *ngFor="let trabajo of trabajos" [value]="trabajo.job_id">
+                                {{ trabajo.job_title }}
+                            </option>
                         </select>
                     </div>
                 </div>
-                <button type="submit" class="btn btn-primary">Guardar</button>
-                <button type="button" class="btn btn-warning" (click)="onUpdate()">Actualizar</button>
-                <button type="button" class="btn btn-danger" (click)="onDelete()">Eliminar</button>
-                
+                <button type="submit" class="btn btn-primary mr-2">Guardar</button>
+                <button type="button" class="btn btn-warning mr-2" (click)="confirmUpdate()">Actualizar</button>
+                <button type="button" class="btn btn-danger" (click)="confirmDelete()">Eliminar</button>
             </form>
         </div>
-    
+
         <div class="container my-5">
             <h1>Lista de Empleados</h1>
-          
-            <table class="table table-bordered">
-                <thead>
+            <table class="table table-bordered table-striped">
+                <thead class="thead-dark">
                     <tr>
                         <th>ID</th>
                         <th>Nombre</th>
@@ -110,7 +109,7 @@
                         <th>Fecha de Contratación</th>
                         <th>Título del Trabajo</th>
                         <th>Salario</th>
-                        <th>Comision</th>
+                        <th>Comisión</th>
                         <th>Manager</th>
                         <th>Departamento</th>
                     </tr>
